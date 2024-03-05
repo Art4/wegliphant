@@ -1,0 +1,23 @@
+{
+    "name": "art4/wegliphant",
+    "description": "PHP client for weg.li API",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Artur Weigandt"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Art4\\Wegliphant\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.3"
+    },
+    "require-dev": {},
+    "config": {
+        "sort-packages": true
+    }
+}
