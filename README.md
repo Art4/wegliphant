@@ -1,12 +1,28 @@
-# Wegliphant
+# 🐘 Wegliphant
 
-PHP client for the [weg.li](https://www.weg.li/) API
+[![Latest Version](https://img.shields.io/github/release/Art4/wegliphant.svg)](https://github.com/Art4/wegliphant/releases)
+[![Software License](https://img.shields.io/badge/license-GPL3%20or%20later-brightgreen.svg)](LICENSE.md)
+[![Build Status](https://github.com/Art4/wegliphant/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/Art4/wegliphant/actions)
+[![codecov](https://codecov.io/gh/Art4/wegliphant/graph/badge.svg?token=8J0PBN3KJE)](https://codecov.io/gh/Art4/wegliphant)
+[![Total Downloads](https://img.shields.io/packagist/dt/art4/wegliphant.svg)](https://packagist.org/packages/art4/wegliphant)
 
-Docs: https://www.weg.li/api
+🐘 Wegliphant is a PHP client for the [weg.li](https://www.weg.li/) 🚲💨 API.
+
+API Docs: https://www.weg.li/api
 
 Requires: PHP ^8.3
 
 ## Usage
+
+### Installation
+
+You can install Wegliphant using [Composer](https://getcomposer.org/):
+
+```bash
+composer require art4/wegliphant
+```
+
+Don't forget to load the autoloader using `require 'vendor/autoload.php';`.
 
 ### Setup
 
@@ -27,8 +43,7 @@ $client = \Art4\Wegliphant\Client::create(
 ```php
 $districts = $client->listDistricts();
 
-var_dump($data);
-// $data contains:
+// $districts contains:
 [
     [...],
     [
