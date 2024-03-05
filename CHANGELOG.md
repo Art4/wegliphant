@@ -9,5 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- New class `Art4\Wegliphant\Client` to make API requests
+- Unit tests with PHPUnit
 - composer.json for installation support via composer
 - Docker support for local dev environment
