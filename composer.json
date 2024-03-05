@@ -18,6 +18,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.51",
+        "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^11.0"
     },
     "config": {
@@ -25,8 +26,10 @@
     },
     "scripts": {
         "codestyle": "php-cs-fixer fix",
+        "phpstan": "phpstan analyze --memory-limit 512M --configuration .phpstan.neon",
         "phpunit": "phpunit",
         "test": [
+            "@phpstan",
             "@phpunit",
             "@codestyle --dry-run --diff"
         ]
