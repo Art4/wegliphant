@@ -1,6 +1,53 @@
 # Wegliphant
 
-PHP client for the weg.li API
+PHP client for the [weg.li](https://www.weg.li/) API
+
+Docs: https://www.weg.li/api
+
+Requires: PHP ^8.3
+
+## Usage
+
+### Setup
+
+Wegliphant requires a [PSR-18 HTTP client](https://packagist.org/providers/psr/http-client-implementation)
+and [PSR-17 Request factory](https://packagist.org/providers/psr/http-factory-implementation) implementation.
+
+This example uses [Guzzle](http://docs.guzzlephp.org/):
+
+```php
+$client = \Art4\Wegliphant\Client::create(
+    new \GuzzleHttp\Client(),
+    new \GuzzleHttp\Psr7\HttpFactory(),
+);
+```
+
+### List all districts
+
+```php
+$districts = $client->listDistricts();
+
+var_dump($data);
+// $data contains:
+[
+    [...],
+    [
+        'name' => 'Berlin',
+        'zip' => '12305',
+        'email' => 'mail@example.com',
+        'prefixes' => [
+            'B',
+        ],
+        'latitude' => 52.5170365,
+        'longitude' => 13.3888599,
+        'aliases' => null,
+        'personal_email' => false,
+        'created_at' => '2019-09-24T14:56:35.624+02:00',
+        'updated_at' => '2020-03-06T17:53:09.034+01:00',
+    ],
+    [...],
+],
+```
 
 ## Development
 
