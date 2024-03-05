@@ -1,2 +1,3 @@
-# php-wegli-api
+# Wegliphant
+
 PHP client for the weg.li API
