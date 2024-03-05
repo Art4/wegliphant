@@ -11,5 +11,13 @@ final class Client
         return new self();
     }
 
+    /**
+     * @return mixed[]
+     */
+    public function listDistricts(): array
+    {
+        return [];
+    }
+
     private function __construct() {}
 }
