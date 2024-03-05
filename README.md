@@ -1,6 +1,6 @@
-# Wegliphant
+# 🐘 Wegliphant
 
-PHP client for the [weg.li](https://www.weg.li/) API
+🐘 Wegliphant is a PHP client for the [weg.li](https://www.weg.li/) 🚲💨 API.
 
 Docs: https://www.weg.li/api
 
