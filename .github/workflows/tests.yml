@@ -48,7 +48,7 @@ jobs:
       matrix:
         operating-system: ["ubuntu-latest"]
         php: ["8.3"]
-        tool: ["phpstan", "code-style"]
+        tool: ["phpstan", "code-coverage", "code-style"]
 
     steps:
       - name: Checkout
@@ -72,6 +72,20 @@ jobs:
       - name: Run static code analysis
         if: ${{ matrix.tool == 'phpstan' }}
         run: composer run phpstan -- --error-format=github
+
+      - name: Run tests with coverage-clover
+        if: ${{ matrix.tool == 'code-coverage' }}
+        run: composer run phpunit -- --coverage-clover .phpunit.cache/clover.xml
+
+      - name: Upload coverage reports to Codecov
+        if: ${{ matrix.tool == 'code-coverage' }}
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          files: ./.phpunit.cache/clover.xml
+          fail_ci_if_error: true
+          verbose: true
 
       - name: Check code-style
         if: ${{ matrix.tool == 'code-style' }}
