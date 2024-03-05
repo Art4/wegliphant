@@ -21,5 +21,11 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "phpunit": "phpunit",
+        "test": [
+            "@phpunit"
+        ]
     }
 }
