@@ -8,6 +8,16 @@ Requires: PHP ^8.3
 
 ## Usage
 
+### Installation
+
+You can install Wegliphant using [Composer](https://getcomposer.org/):
+
+```bash
+composer require art4/wegliphant
+```
+
+Don't forget to load the autoloader using `require 'vendor/autoload.php';`.
+
 ### Setup
 
 Wegliphant requires a [PSR-18 HTTP client](https://packagist.org/providers/psr/http-client-implementation)
