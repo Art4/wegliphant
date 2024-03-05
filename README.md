@@ -3,6 +3,7 @@
 [![Latest Version](https://img.shields.io/github/release/Art4/wegliphant.svg)](https://github.com/Art4/wegliphant/releases)
 [![Software License](https://img.shields.io/badge/license-GPL3%20or%20later-brightgreen.svg)](LICENSE.md)
 [![Build Status](https://github.com/Art4/wegliphant/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/Art4/wegliphant/actions)
+[![codecov](https://codecov.io/gh/Art4/wegliphant/graph/badge.svg?token=8J0PBN3KJE)](https://codecov.io/gh/Art4/wegliphant)
 [![Total Downloads](https://img.shields.io/packagist/dt/art4/wegliphant.svg)](https://packagist.org/packages/art4/wegliphant)
 
 🐘 Wegliphant is a PHP client for the [weg.li](https://www.weg.li/) 🚲💨 API.
