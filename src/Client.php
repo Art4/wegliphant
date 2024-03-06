@@ -57,6 +57,25 @@ final class Client
         return $this->parseJsonResponseToArray($response);
     }
 
+    /**
+     * List all charges using the endpoint `GET /charges.json`
+     *
+     * @link https://www.weg.li/api
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
+     * @throws \Exception If an error happens while processing the response.
+     *
+     * @return mixed[]
+     */
+    public function listCharges(): array
+    {
+        $response = $this->sendJsonRequest('GET', 'https://www.weg.li/charges.json');
+
+        $this->ensureJsonResponse($response, 200);
+
+        return $this->parseJsonResponseToArray($response);
+    }
+
     private function __construct(
         private ClientInterface $httpClient,
         private RequestFactoryInterface $requestFactory,
