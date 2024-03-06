@@ -8,6 +8,7 @@ use Exception;
 use JsonException;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
 
 final class Client
 {
@@ -30,10 +31,7 @@ final class Client
      */
     public function listDistricts(): array
     {
-        $request = $this->requestFactory->createRequest('GET', 'https://www.weg.li/districts.json');
-        $request = $request->withHeader('Accept', 'application/json');
-
-        $response = $this->httpClient->sendRequest($request);
+        $response = $this->sendJsonRequest('GET', 'https://www.weg.li/districts.json');
 
         if ($response->getStatusCode() !== 200) {
             throw new Exception('Server replied with status code ' . $response->getStatusCode());
@@ -70,10 +68,7 @@ final class Client
      */
     public function getDistrictByZip(string $zip): array
     {
-        $request = $this->requestFactory->createRequest('GET', 'https://www.weg.li/districts/' . $zip . '.json');
-        $request = $request->withHeader('Accept', 'application/json');
-
-        $response = $this->httpClient->sendRequest($request);
+        $response = $this->sendJsonRequest('GET', 'https://www.weg.li/districts/' . $zip . '.json');
 
         if ($response->getStatusCode() !== 200) {
             throw new Exception('Server replied with status code ' . $response->getStatusCode());
@@ -102,4 +97,17 @@ final class Client
         private ClientInterface $httpClient,
         private RequestFactoryInterface $requestFactory,
     ) {}
+
+    /**
+     * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
+     */
+    private function sendJsonRequest(
+        string $method,
+        string $path,
+    ): ResponseInterface {
+        $request = $this->requestFactory->createRequest($method, $path);
+        $request = $request->withHeader('Accept', 'application/json');
+
+        return $this->httpClient->sendRequest($request);
+    }
 }
