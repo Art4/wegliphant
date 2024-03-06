@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Art4\Wegliphant\Client;
 
 use Art4\Wegliphant\Client;
-use Exception;
+use Art4\Wegliphant\Exception\UnexpectedResponseException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -97,7 +97,7 @@ final class GetDistrictByZipTest extends TestCase
         $client->getDistrictByZip('12305');
     }
 
-    public function testGetDistrictByZipExceptionOnWrongStatusCode(): void
+    public function testGetDistrictByZipThrowsUnexpectedResponseExceptionOnWrongStatusCode(): void
     {
         $request = $this->createMock(RequestInterface::class);
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
@@ -120,13 +120,13 @@ final class GetDistrictByZipTest extends TestCase
             $requestFactory,
         );
 
-        $this->expectException(Exception::class);
+        $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Server replied with status code 500');
 
         $client->getDistrictByZip('00000');
     }
 
-    public function testGetDistrictByZipExceptionOnWrongContentTypeHeader(): void
+    public function testGetDistrictByZipThrowsUnexpectedResponseExceptionOnWrongContentTypeHeader(): void
     {
         $request = $this->createMock(RequestInterface::class);
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
@@ -150,13 +150,13 @@ final class GetDistrictByZipTest extends TestCase
             $requestFactory,
         );
 
-        $this->expectException(Exception::class);
+        $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Server replied not with JSON content.');
 
         $client->getDistrictByZip('12305');
     }
 
-    public function testGetDistrictByZipExceptionOnInvalidJsonBody(): void
+    public function testGetDistrictByZipThrowsUnexpectedResponseExceptionOnInvalidJsonBody(): void
     {
         $request = $this->createMock(RequestInterface::class);
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
@@ -188,13 +188,13 @@ final class GetDistrictByZipTest extends TestCase
             $requestFactory,
         );
 
-        $this->expectException(Exception::class);
+        $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Response body contains no valid JSON: invalid json');
 
         $client->getDistrictByZip('12305');
     }
 
-    public function testGetDistrictByZipExceptionOnJsonBodyWithoutArray(): void
+    public function testGetDistrictByZipThrowsUnexpectedResponseExceptionOnJsonBodyWithoutArray(): void
     {
         $request = $this->createMock(RequestInterface::class);
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
@@ -226,7 +226,7 @@ final class GetDistrictByZipTest extends TestCase
             $requestFactory,
         );
 
-        $this->expectException(Exception::class);
+        $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Response JSON does not contain an array: "this is not an array"');
 
         $client->getDistrictByZip('12305');

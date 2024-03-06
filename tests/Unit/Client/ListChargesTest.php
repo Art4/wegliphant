@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Art4\Wegliphant\Client;
 
 use Art4\Wegliphant\Client;
-use Exception;
+use Art4\Wegliphant\Exception\UnexpectedResponseException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -169,7 +169,7 @@ final class ListChargesTest extends TestCase
         $client->listCharges();
     }
 
-    public function testListChargesExceptionOnWrongStatusCode(): void
+    public function testListChargesThrowsUnexpectedResponseExceptionOnWrongStatusCode(): void
     {
         $request = $this->createMock(RequestInterface::class);
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
@@ -192,13 +192,13 @@ final class ListChargesTest extends TestCase
             $requestFactory,
         );
 
-        $this->expectException(Exception::class);
+        $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Server replied with status code 500');
 
         $client->listCharges();
     }
 
-    public function testListChargesExceptionOnWrongContentTypeHeader(): void
+    public function testListChargesThrowsUnexpectedResponseExceptionOnWrongContentTypeHeader(): void
     {
         $request = $this->createMock(RequestInterface::class);
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
@@ -222,13 +222,13 @@ final class ListChargesTest extends TestCase
             $requestFactory,
         );
 
-        $this->expectException(Exception::class);
+        $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Server replied not with JSON content.');
 
         $client->listCharges();
     }
 
-    public function testListChargesExceptionOnInvalidJsonBody(): void
+    public function testListChargesThrowsUnexpectedResponseExceptionOnInvalidJsonBody(): void
     {
         $request = $this->createMock(RequestInterface::class);
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
@@ -260,13 +260,13 @@ final class ListChargesTest extends TestCase
             $requestFactory,
         );
 
-        $this->expectException(Exception::class);
+        $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Response body contains no valid JSON: invalid json');
 
         $client->listCharges();
     }
 
-    public function testListChargesExceptionOnJsonBodyWithoutArray(): void
+    public function testListChargesThrowsUnexpectedResponseExceptionOnJsonBodyWithoutArray(): void
     {
         $request = $this->createMock(RequestInterface::class);
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
@@ -298,7 +298,7 @@ final class ListChargesTest extends TestCase
             $requestFactory,
         );
 
-        $this->expectException(Exception::class);
+        $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Response JSON does not contain an array: "this is not an array"');
 
         $client->listCharges();
