@@ -35,19 +35,7 @@ final class Client
 
         $this->ensureJsonResponse($response, 200);
 
-        $responseBody = $response->getBody()->__toString();
-
-        try {
-            $data = json_decode($responseBody, true, 512, JSON_THROW_ON_ERROR);
-        } catch (JsonException $th) {
-            throw new Exception('Response body contains no valid JSON: ' . $responseBody, 0, $th);
-        }
-
-        if (! is_array($data)) {
-            throw new Exception('Response JSON does not contain an array: ' . $responseBody);
-        }
-
-        return $data;
+        return $this->parseJsonResponseToArray($response);
     }
 
     /**
@@ -66,19 +54,7 @@ final class Client
 
         $this->ensureJsonResponse($response, 200);
 
-        $responseBody = $response->getBody()->__toString();
-
-        try {
-            $data = json_decode($responseBody, true, 512, JSON_THROW_ON_ERROR);
-        } catch (JsonException $th) {
-            throw new Exception('Response body contains no valid JSON: ' . $responseBody, 0, $th);
-        }
-
-        if (! is_array($data)) {
-            throw new Exception('Response JSON does not contain an array: ' . $responseBody);
-        }
-
-        return $data;
+        return $this->parseJsonResponseToArray($response);
     }
 
     private function __construct(
@@ -113,5 +89,27 @@ final class Client
         if (! str_starts_with($response->getHeaderLine('content-type'), 'application/json')) {
             throw new Exception('Server replied not with JSON content.');
         }
+    }
+
+    /**
+     * @throws \Exception If an error happens while processing the response.
+     *
+     * @return mixed[]
+     */
+    private function parseJsonResponseToArray(ResponseInterface $response): array
+    {
+        $responseBody = $response->getBody()->__toString();
+
+        try {
+            $data = json_decode($responseBody, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $th) {
+            throw new Exception('Response body contains no valid JSON: ' . $responseBody, 0, $th);
+        }
+
+        if (! is_array($data)) {
+            throw new Exception('Response JSON does not contain an array: ' . $responseBody);
+        }
+
+        return $data;
     }
 }
