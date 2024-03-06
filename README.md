@@ -38,6 +38,14 @@ $client = \Art4\Wegliphant\Client::create(
 );
 ```
 
+Optionally, you can use `authenticate()` to set an API key. Some areas of the weg.li API require an API key.
+Without the API key, all requests are sent without authorization.
+You can find your API key [here](https://www.weg.li/user/edit).
+
+```php
+$client->authenticate($apiKey);
+```
+
 ### List all districts
 
 ```php
