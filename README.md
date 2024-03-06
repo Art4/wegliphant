@@ -86,6 +86,39 @@ $district = $client->getDistrictByZip('12305');
 ],
 ```
 
+### List all charges
+
+```php
+$charges = $client->listCharges();
+
+// $charges contains:
+[
+    [...],
+    [
+        'tbnr' => '141313',
+        'description' => 'Sie parkten im absoluten Haltverbot (Zeichen 283) und behinderten +) dadurch Andere.',
+        'fine' => '40.0',
+        'bkat' => '§ 41 Abs. 1 iVm Anlage 2, § 1 Abs. 2, § 49 StVO; § 24 Abs. 1, 3 Nr. 5 StVG; 52.1 BKat; § 19 OWiG',
+        'penalty' => null,
+        'fap' => null,
+        'points' => 0,
+        'valid_from' => '2021-11-09T00:00:00.000+01:00',
+        'valid_to' => null,
+        'implementation' => 2,
+        'classification' => 5,
+        'variant_table_id' => 741017,
+        'rule_id' => 39,
+        'table_id' => null,
+        'required_refinements' => '00000000000000000000000000000000',
+        'number_required_refinements' => 1,
+        'max_fine' => '0.0',
+        'created_at' => '2023-09-18T15:30:43.329+02:00',
+        'updated_at' => '2023-09-18T15:30:43.329+02:00',
+    ],
+    [...],
+],
+```
+
 ## Development
 
 You can use Docker to create the full develoment environment.

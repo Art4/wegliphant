@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New method `Art4\Wegliphant\Client::getDistrictByZip()` to get one district by ZIP.
+- New method `Art4\Wegliphant\Client::listCharges()` to list all charges.
 - Support for PHP 8.1 and PHP 8.2.
 
 ## [0.1.0 - 2024-03-05](https://github.com/Art4/wegliphant/compare/3a69d42338ea699afe87fe6f9a0cb1e9059e505d...0.1.0)
