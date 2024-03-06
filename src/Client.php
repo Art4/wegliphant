@@ -33,13 +33,7 @@ final class Client
     {
         $response = $this->sendJsonRequest('GET', 'https://www.weg.li/districts.json');
 
-        if ($response->getStatusCode() !== 200) {
-            throw new Exception('Server replied with status code ' . $response->getStatusCode());
-        }
-
-        if (! str_starts_with($response->getHeaderLine('content-type'), 'application/json')) {
-            throw new Exception('Server replied not with JSON content.');
-        }
+        $this->ensureJsonResponse($response, 200);
 
         $responseBody = $response->getBody()->__toString();
 
@@ -70,13 +64,7 @@ final class Client
     {
         $response = $this->sendJsonRequest('GET', 'https://www.weg.li/districts/' . $zip . '.json');
 
-        if ($response->getStatusCode() !== 200) {
-            throw new Exception('Server replied with status code ' . $response->getStatusCode());
-        }
-
-        if (! str_starts_with($response->getHeaderLine('content-type'), 'application/json')) {
-            throw new Exception('Server replied not with JSON content.');
-        }
+        $this->ensureJsonResponse($response, 200);
 
         $responseBody = $response->getBody()->__toString();
 
@@ -109,5 +97,21 @@ final class Client
         $request = $request->withHeader('Accept', 'application/json');
 
         return $this->httpClient->sendRequest($request);
+    }
+
+    /**
+     * @throws \Exception If the response has the wrong status code or content type header.
+     */
+    private function ensureJsonResponse(
+        ResponseInterface $response,
+        int $expectedStatusCode,
+    ): void {
+        if ($response->getStatusCode() !== $expectedStatusCode) {
+            throw new Exception('Server replied with status code ' . $response->getStatusCode());
+        }
+
+        if (! str_starts_with($response->getHeaderLine('content-type'), 'application/json')) {
+            throw new Exception('Server replied not with JSON content.');
+        }
     }
 }
