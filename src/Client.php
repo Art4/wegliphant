@@ -8,6 +8,7 @@ use Exception;
 use JsonException;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
 
 final class Client
 {
@@ -30,19 +31,73 @@ final class Client
      */
     public function listDistricts(): array
     {
-        $request = $this->requestFactory->createRequest('GET', 'https://www.weg.li/districts.json');
+        $response = $this->sendJsonRequest('GET', 'https://www.weg.li/districts.json');
+
+        $this->ensureJsonResponse($response, 200);
+
+        return $this->parseJsonResponseToArray($response);
+    }
+
+    /**
+     * Get one district by ZIP using the endpoint `GET /districts/<zip>.json`
+     *
+     * @link https://www.weg.li/api
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
+     * @throws \Exception If an error happens while processing the response.
+     *
+     * @return mixed[]
+     */
+    public function getDistrictByZip(string $zip): array
+    {
+        $response = $this->sendJsonRequest('GET', 'https://www.weg.li/districts/' . $zip . '.json');
+
+        $this->ensureJsonResponse($response, 200);
+
+        return $this->parseJsonResponseToArray($response);
+    }
+
+    private function __construct(
+        private ClientInterface $httpClient,
+        private RequestFactoryInterface $requestFactory,
+    ) {}
+
+    /**
+     * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
+     */
+    private function sendJsonRequest(
+        string $method,
+        string $path,
+    ): ResponseInterface {
+        $request = $this->requestFactory->createRequest($method, $path);
         $request = $request->withHeader('Accept', 'application/json');
 
-        $response = $this->httpClient->sendRequest($request);
+        return $this->httpClient->sendRequest($request);
+    }
 
-        if ($response->getStatusCode() !== 200) {
+    /**
+     * @throws \Exception If the response has the wrong status code or content type header.
+     */
+    private function ensureJsonResponse(
+        ResponseInterface $response,
+        int $expectedStatusCode,
+    ): void {
+        if ($response->getStatusCode() !== $expectedStatusCode) {
             throw new Exception('Server replied with status code ' . $response->getStatusCode());
         }
 
         if (! str_starts_with($response->getHeaderLine('content-type'), 'application/json')) {
             throw new Exception('Server replied not with JSON content.');
         }
+    }
 
+    /**
+     * @throws \Exception If an error happens while processing the response.
+     *
+     * @return mixed[]
+     */
+    private function parseJsonResponseToArray(ResponseInterface $response): array
+    {
         $responseBody = $response->getBody()->__toString();
 
         try {
@@ -57,9 +112,4 @@ final class Client
 
         return $data;
     }
-
-    private function __construct(
-        private ClientInterface $httpClient,
-        private RequestFactoryInterface $requestFactory,
-    ) {}
 }

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/Art4/wegliphant/compare/0.1.0...main)
 
+### Added
+
+- New method `Art4\Wegliphant\Client::getDistrictByZip()` to get one district by ZIP.
+
 ## [0.1.0 - 2024-03-05](https://github.com/Art4/wegliphant/compare/3a69d42338ea699afe87fe6f9a0cb1e9059e505d...0.1.0)
 
 ### Added
