@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/Art4/wegliphant/compare/0.2.0...main)
 
+### Added
+
 - New class `Art4\Wegliphant\Exception\UnexpectedResponseException` that will be thrown if an error happens while processing the response.
+
+### Changed
+
+- `Art4\Wegliphant\Client` now throws `Art4\Wegliphant\Exception\UnexpectedResponseException` if an error happens while processing responses.
 
 ## [0.2.0 - 2024-03-06](https://github.com/Art4/wegliphant/compare/0.1.0...0.2.0)
 
