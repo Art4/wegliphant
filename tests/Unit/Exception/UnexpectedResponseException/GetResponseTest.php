@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Art4\Wegliphant\Exception\UnexpectedResponseException;
 
 use Art4\Wegliphant\Exception\UnexpectedResponseException;
-use Exception;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
