@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Art4\Wegliphant;
 
 use Art4\Wegliphant\Exception\UnexpectedResponseException;
-use Exception;
 use JsonException;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
