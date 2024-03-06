@@ -64,6 +64,28 @@ $districts = $client->listDistricts();
 ],
 ```
 
+### Get one district by zip
+
+```php
+$district = $client->getDistrictByZip('12305');
+
+// $district contains:
+[
+    'name' => 'Berlin',
+    'zip' => '12305',
+    'email' => 'mail@example.com',
+    'prefixes' => [
+        'B',
+    ],
+    'latitude' => 52.5170365,
+    'longitude' => 13.3888599,
+    'aliases' => null,
+    'personal_email' => false,
+    'created_at' => '2019-09-24T14:56:35.624+02:00',
+    'updated_at' => '2020-03-06T17:53:09.034+01:00',
+],
+```
+
 ## Development
 
 You can use Docker to create the full develoment environment.
