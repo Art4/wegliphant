@@ -10,7 +10,7 @@
 
 API Docs: https://www.weg.li/api
 
-Requires: PHP ^8.3
+Requires: PHP ^8.1
 
 ## Usage
 
