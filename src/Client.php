@@ -19,6 +19,8 @@ final class Client
         return new self($httpClient, $requestFactory);
     }
 
+    private string $apiUrl = 'https://www.weg.li';
+
     /**
      * List all districts using the endpoint `GET /districts.json`
      *
@@ -31,7 +33,7 @@ final class Client
      */
     public function listDistricts(): array
     {
-        $response = $this->sendJsonRequest('GET', 'https://www.weg.li/districts.json');
+        $response = $this->sendJsonRequest('GET', '/districts.json');
 
         $this->ensureJsonResponse($response, 200);
 
@@ -50,7 +52,7 @@ final class Client
      */
     public function getDistrictByZip(string $zip): array
     {
-        $response = $this->sendJsonRequest('GET', 'https://www.weg.li/districts/' . $zip . '.json');
+        $response = $this->sendJsonRequest('GET', '/districts/' . $zip . '.json');
 
         $this->ensureJsonResponse($response, 200);
 
@@ -69,7 +71,7 @@ final class Client
      */
     public function listCharges(): array
     {
-        $response = $this->sendJsonRequest('GET', 'https://www.weg.li/charges.json');
+        $response = $this->sendJsonRequest('GET', '/charges.json');
 
         $this->ensureJsonResponse($response, 200);
 
@@ -88,7 +90,7 @@ final class Client
         string $method,
         string $path,
     ): ResponseInterface {
-        $request = $this->requestFactory->createRequest($method, $path);
+        $request = $this->requestFactory->createRequest($method, $this->apiUrl . $path);
         $request = $request->withHeader('Accept', 'application/json');
 
         return $this->httpClient->sendRequest($request);
