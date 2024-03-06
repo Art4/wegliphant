@@ -21,6 +21,18 @@ final class Client
 
     private string $apiUrl = 'https://www.weg.li';
 
+    private string $apiKey = '';
+
+    private function __construct(
+        private ClientInterface $httpClient,
+        private RequestFactoryInterface $requestFactory,
+    ) {}
+
+    public function authenticate(string $apiKey): void
+    {
+        $this->apiKey = $apiKey;
+    }
+
     /**
      * List all districts using the endpoint `GET /districts.json`
      *
@@ -78,11 +90,6 @@ final class Client
         return $this->parseJsonResponseToArray($response);
     }
 
-    private function __construct(
-        private ClientInterface $httpClient,
-        private RequestFactoryInterface $requestFactory,
-    ) {}
-
     /**
      * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
      */
@@ -92,6 +99,10 @@ final class Client
     ): ResponseInterface {
         $request = $this->requestFactory->createRequest($method, $this->apiUrl . $path);
         $request = $request->withHeader('Accept', 'application/json');
+
+        if ($this->apiKey !== '') {
+            $request = $request->withHeader('X-API-KEY', $this->apiKey);
+        }
 
         return $this->httpClient->sendRequest($request);
     }
