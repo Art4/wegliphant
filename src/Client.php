@@ -91,6 +91,25 @@ final class Client
     }
 
     /**
+     * List all notices for the authorized user using the endpoint `GET /api/notices`
+     *
+     * @link https://www.weg.li/api-docs/index.html#operations-notice-get_notices
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
+     * @throws UnexpectedResponseException If an error happens while processing the response.
+     *
+     * @return mixed[]
+     */
+    public function listOwnNotices(): array
+    {
+        $response = $this->sendJsonRequest('GET', '/api/notices');
+
+        $this->ensureJsonResponse($response, 200);
+
+        return $this->parseJsonResponseToArray($response);
+    }
+
+    /**
      * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
      */
     private function sendJsonRequest(
