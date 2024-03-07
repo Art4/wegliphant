@@ -151,7 +151,7 @@ final class ListDistrictsTest extends TestCase
         );
 
         $this->expectException(UnexpectedResponseException::class);
-        $this->expectExceptionMessage('Server replied with status code 500');
+        $this->expectExceptionMessage('Server replied with the status code 500, but 200 was expected.');
 
         $client->listDistricts();
     }

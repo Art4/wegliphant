@@ -128,7 +128,14 @@ final class Client
     private function parseJsonResponseToArray(ResponseInterface $response, int $expectedStatusCode): array
     {
         if ($response->getStatusCode() !== $expectedStatusCode) {
-            throw UnexpectedResponseException::create('Server replied with status code ' . $response->getStatusCode(), $response);
+            throw UnexpectedResponseException::create(
+                sprintf(
+                    'Server replied with the status code %d, but %d was expected.',
+                    $response->getStatusCode(),
+                    $expectedStatusCode,
+                ),
+                $response,
+            );
         }
 
         if (! str_starts_with($response->getHeaderLine('content-type'), 'application/json')) {
