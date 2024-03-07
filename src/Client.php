@@ -102,6 +102,23 @@ final class Client
     }
 
     /**
+     * Get a notice by token for the authorized user using the endpoint `GET /api/notices/{token}`
+     *
+     * @link https://www.weg.li/api-docs/index.html#operations-notice-get_notices__token_
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
+     * @throws UnexpectedResponseException If an error happens while processing the response.
+     *
+     * @return mixed[]
+     */
+    public function getNoticeByToken(string $token): array
+    {
+        $response = $this->sendJsonRequest('GET', '/api/notices/' . $token);
+
+        return $this->parseJsonResponseToArray($response, 200);
+    }
+
+    /**
      * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
      */
     private function sendJsonRequest(
