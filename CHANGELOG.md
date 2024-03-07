@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - New method `Art4\Wegliphant\Client::authenticate()` to set your API key for authorized API requests.
 - New method `Art4\Wegliphant\Client::listOwnNotices()` to list all notices for the authorized user.
+- New method `Art4\Wegliphant\Client::getNoticeByToken()` to get one notice for the authorized user.
 - New class `Art4\Wegliphant\Exception\UnexpectedResponseException` that will be thrown if an error happens while processing the response.
 
 ### Changed

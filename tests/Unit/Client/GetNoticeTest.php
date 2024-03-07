@@ -107,7 +107,7 @@ final class GetNoticeTest extends TestCase
         );
         $client->authenticate($apiKey);
 
-        $response = $client->getNotice('8843d7f92416211de9ebb963ff4ce281');
+        $response = $client->getNoticeByToken('8843d7f92416211de9ebb963ff4ce281');
 
         $this->assertSame(
             $expected,
@@ -136,7 +136,7 @@ final class GetNoticeTest extends TestCase
         $this->expectException(ClientExceptionInterface::class);
         $this->expectExceptionMessage('');
 
-        $client->getNotice('8843d7f92416211de9ebb963ff4ce281');
+        $client->getNoticeByToken('8843d7f92416211de9ebb963ff4ce281');
     }
 
     public function testGetNoticeThrowsUnexpectedResponseExceptionOnWrongStatusCode(): void
@@ -165,7 +165,7 @@ final class GetNoticeTest extends TestCase
         $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Server replied with the status code 500, but 200 was expected.');
 
-        $client->getNotice('8843d7f92416211de9ebb963ff4ce281');
+        $client->getNoticeByToken('8843d7f92416211de9ebb963ff4ce281');
     }
 
     public function testGetNoticeThrowsUnexpectedResponseExceptionOnWrongContentTypeHeader(): void
@@ -195,7 +195,7 @@ final class GetNoticeTest extends TestCase
         $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Server replied not with JSON content.');
 
-        $client->getNotice('8843d7f92416211de9ebb963ff4ce281');
+        $client->getNoticeByToken('8843d7f92416211de9ebb963ff4ce281');
     }
 
     public function testGetNoticeThrowsUnexpectedResponseExceptionOnInvalidJsonBody(): void
@@ -233,7 +233,7 @@ final class GetNoticeTest extends TestCase
         $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Response body contains no valid JSON: invalid json');
 
-        $client->getNotice('8843d7f92416211de9ebb963ff4ce281');
+        $client->getNoticeByToken('8843d7f92416211de9ebb963ff4ce281');
     }
 
     public function testGetNoticeThrowsUnexpectedResponseExceptionOnJsonBodyWithoutArray(): void
@@ -271,6 +271,6 @@ final class GetNoticeTest extends TestCase
         $this->expectException(UnexpectedResponseException::class);
         $this->expectExceptionMessage('Response JSON does not contain an array: "this is not an array"');
 
-        $client->getNotice('8843d7f92416211de9ebb963ff4ce281');
+        $client->getNoticeByToken('8843d7f92416211de9ebb963ff4ce281');
     }
 }

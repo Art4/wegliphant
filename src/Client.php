@@ -102,7 +102,7 @@ final class Client
     }
 
     /**
-     * Get a notice for the authorized user using the endpoint `GET /api/notices/{token}`
+     * Get a notice by token for the authorized user using the endpoint `GET /api/notices/{token}`
      *
      * @link https://www.weg.li/api-docs/index.html#operations-notice-get_notices__token_
      *
@@ -111,7 +111,7 @@ final class Client
      *
      * @return mixed[]
      */
-    public function getNotice(string $token): array
+    public function getNoticeByToken(string $token): array
     {
         $response = $this->sendJsonRequest('GET', '/api/notices/' . $token);
 
