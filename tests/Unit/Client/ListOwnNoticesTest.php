@@ -22,7 +22,7 @@ final class ListOwnNoticesTest extends TestCase
     {
         $expected = [
             [
-                'token' => '7a473465c3cbbc6c90781b5e798966ce',
+                'token' => '8843d7f92416211de9ebb963ff4ce281',
                 'status' => 'shared',
                 'street' => 'Musterstraße 123',
                 'city' => 'Berlin',
@@ -59,8 +59,8 @@ final class ListOwnNoticesTest extends TestCase
                 'note' => 'Some user notes',
                 'photos' => [
                     [
-                        'filename' => 'IMG_20231124_113156.jpg',
-                        'url' => 'https://example.com/storage/IMG_20231124_113156.jpg',
+                        'filename' => 'IMG_20231112_113156.jpg',
+                        'url' => 'https://example.com/storage/IMG_20231112_113156.jpg',
                     ],
                 ],
                 'created_at' => '2023-11-12T11:33:29.423+01:00',
