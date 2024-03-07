@@ -47,9 +47,7 @@ final class Client
     {
         $response = $this->sendJsonRequest('GET', '/districts.json');
 
-        $this->ensureJsonResponse($response, 200);
-
-        return $this->parseJsonResponseToArray($response);
+        return $this->parseJsonResponseToArray($response, 200);
     }
 
     /**
@@ -66,9 +64,7 @@ final class Client
     {
         $response = $this->sendJsonRequest('GET', '/districts/' . $zip . '.json');
 
-        $this->ensureJsonResponse($response, 200);
-
-        return $this->parseJsonResponseToArray($response);
+        return $this->parseJsonResponseToArray($response, 200);
     }
 
     /**
@@ -85,9 +81,24 @@ final class Client
     {
         $response = $this->sendJsonRequest('GET', '/charges.json');
 
-        $this->ensureJsonResponse($response, 200);
+        return $this->parseJsonResponseToArray($response, 200);
+    }
 
-        return $this->parseJsonResponseToArray($response);
+    /**
+     * List all notices for the authorized user using the endpoint `GET /api/notices`
+     *
+     * @link https://www.weg.li/api-docs/index.html#operations-notice-get_notices
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
+     * @throws UnexpectedResponseException If an error happens while processing the response.
+     *
+     * @return mixed[]
+     */
+    public function listOwnNotices(): array
+    {
+        $response = $this->sendJsonRequest('GET', '/api/notices');
+
+        return $this->parseJsonResponseToArray($response, 200);
     }
 
     /**
@@ -108,28 +119,29 @@ final class Client
     }
 
     /**
-     * @throws UnexpectedResponseException If the response has the wrong status code or content type header.
+     * @throws UnexpectedResponseException If the response has the wrong status code.
+     * @throws UnexpectedResponseException If the response has the wrong content type header.
+     * @throws UnexpectedResponseException If an error happens while parsing the JSON response.
+     *
+     * @return mixed[]
      */
-    private function ensureJsonResponse(
-        ResponseInterface $response,
-        int $expectedStatusCode,
-    ): void {
+    private function parseJsonResponseToArray(ResponseInterface $response, int $expectedStatusCode): array
+    {
         if ($response->getStatusCode() !== $expectedStatusCode) {
-            throw UnexpectedResponseException::create('Server replied with status code ' . $response->getStatusCode(), $response);
+            throw UnexpectedResponseException::create(
+                sprintf(
+                    'Server replied with the status code %d, but %d was expected.',
+                    $response->getStatusCode(),
+                    $expectedStatusCode,
+                ),
+                $response,
+            );
         }
 
         if (! str_starts_with($response->getHeaderLine('content-type'), 'application/json')) {
             throw UnexpectedResponseException::create('Server replied not with JSON content.', $response);
         }
-    }
 
-    /**
-     * @throws UnexpectedResponseException If an error happens while parsing the JSON response.
-     *
-     * @return mixed[]
-     */
-    private function parseJsonResponseToArray(ResponseInterface $response): array
-    {
         $responseBody = $response->getBody()->__toString();
 
         try {
