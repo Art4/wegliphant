@@ -85,6 +85,23 @@ final class Client
     }
 
     /**
+     * Get one charge by tbnr using the endpoint `GET /api/charges/<tbnr>`
+     *
+     * @link https://www.weg.li/api
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the request.
+     * @throws UnexpectedResponseException If an error happens while processing the response.
+     *
+     * @return mixed[]
+     */
+    public function getChargeByTbnr(string $tbnr): array
+    {
+        $response = $this->sendJsonRequest('GET', '/api/charges/' . $tbnr);
+
+        return $this->parseJsonResponseToArray($response, 200);
+    }
+
+    /**
      * List all notices for the authorized user using the endpoint `GET /api/notices`
      *
      * @link https://www.weg.li/api-docs/index.html#operations-notice-get_notices
