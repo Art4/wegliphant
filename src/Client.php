@@ -79,7 +79,7 @@ final class Client
      */
     public function listCharges(): array
     {
-        $response = $this->sendJsonRequest('GET', '/charges.json');
+        $response = $this->sendJsonRequest('GET', '/api/charges');
 
         return $this->parseJsonResponseToArray($response, 200);
     }
