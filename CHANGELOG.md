@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The supported weg.li-API spec as Swagger 2.0 json format was added.
 
+### Changed
+
+- The endpoints for listing charges and districs and getting a district by ZIP were changed to reflect the latest API changes.
+
 ## [0.3.0 - 2024-03-07](https://github.com/Art4/wegliphant/compare/0.2.0...0.3.0)
 
 ### Added

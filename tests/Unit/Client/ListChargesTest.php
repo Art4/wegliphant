@@ -107,11 +107,16 @@ final class ListChargesTest extends TestCase
             ],
         ];
 
+        $apiKey = 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2';
+
         $request = $this->createMock(RequestInterface::class);
-        $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
+        $request->expects($this->exactly(2))->method('withHeader')->willReturnMap([
+            ['Accept', 'application/json', $request],
+            ['X-API-KEY', $apiKey, $request],
+        ]);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/charges.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/charges')->willReturn($request);
 
         $stream = $this->createConfiguredMock(
             StreamInterface::class,
@@ -136,6 +141,7 @@ final class ListChargesTest extends TestCase
             $httpClient,
             $requestFactory,
         );
+        $client->authenticate($apiKey);
 
         $response = $client->listCharges();
 
@@ -147,11 +153,16 @@ final class ListChargesTest extends TestCase
 
     public function testListChargesThrowsClientException(): void
     {
+        $apiKey = 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2';
+
         $request = $this->createMock(RequestInterface::class);
-        $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
+        $request->expects($this->exactly(2))->method('withHeader')->willReturnMap([
+            ['Accept', 'application/json', $request],
+            ['X-API-KEY', $apiKey, $request],
+        ]);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/charges.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/charges')->willReturn($request);
 
         $httpClient = $this->createMock(ClientInterface::class);
         $httpClient->expects($this->exactly(1))->method('sendRequest')->willThrowException(
@@ -162,6 +173,7 @@ final class ListChargesTest extends TestCase
             $httpClient,
             $requestFactory,
         );
+        $client->authenticate($apiKey);
 
         $this->expectException(ClientExceptionInterface::class);
         $this->expectExceptionMessage('');
@@ -175,12 +187,12 @@ final class ListChargesTest extends TestCase
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/charges.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/charges')->willReturn($request);
 
         $response = $this->createConfiguredMock(
             ResponseInterface::class,
             [
-                'getStatusCode' => 500,
+                'getStatusCode' => 401,
             ]
         );
 
@@ -193,7 +205,7 @@ final class ListChargesTest extends TestCase
         );
 
         $this->expectException(UnexpectedResponseException::class);
-        $this->expectExceptionMessage('Server replied with the status code 500, but 200 was expected.');
+        $this->expectExceptionMessage('Server replied with the status code 401, but 200 was expected.');
 
         $client->listCharges();
     }
@@ -204,7 +216,7 @@ final class ListChargesTest extends TestCase
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/charges.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/charges')->willReturn($request);
 
         $response = $this->createConfiguredMock(
             ResponseInterface::class,
@@ -234,7 +246,7 @@ final class ListChargesTest extends TestCase
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/charges.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/charges')->willReturn($request);
 
         $stream = $this->createConfiguredMock(
             StreamInterface::class,
@@ -272,7 +284,7 @@ final class ListChargesTest extends TestCase
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/charges.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/charges')->willReturn($request);
 
         $stream = $this->createConfiguredMock(
             StreamInterface::class,

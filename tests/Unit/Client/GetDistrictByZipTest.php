@@ -35,11 +35,16 @@ final class GetDistrictByZipTest extends TestCase
             'updated_at' => '2020-03-06T17:53:09.034+01:00',
         ];
 
+        $apiKey = 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2';
+
         $request = $this->createMock(RequestInterface::class);
-        $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
+        $request->expects($this->exactly(2))->method('withHeader')->willReturnMap([
+            ['Accept', 'application/json', $request],
+            ['X-API-KEY', $apiKey, $request],
+        ]);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/districts/12305.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/districts/12305')->willReturn($request);
 
         $stream = $this->createConfiguredMock(
             StreamInterface::class,
@@ -64,6 +69,7 @@ final class GetDistrictByZipTest extends TestCase
             $httpClient,
             $requestFactory,
         );
+        $client->authenticate($apiKey);
 
         $response = $client->getDistrictByZip('12305');
 
@@ -75,11 +81,16 @@ final class GetDistrictByZipTest extends TestCase
 
     public function testGetDistrictByZipThrowsClientException(): void
     {
+        $apiKey = 'c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2';
+
         $request = $this->createMock(RequestInterface::class);
-        $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
+        $request->expects($this->exactly(2))->method('withHeader')->willReturnMap([
+            ['Accept', 'application/json', $request],
+            ['X-API-KEY', $apiKey, $request],
+        ]);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/districts/12305.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/districts/12305')->willReturn($request);
 
         $httpClient = $this->createMock(ClientInterface::class);
         $httpClient->expects($this->exactly(1))->method('sendRequest')->willThrowException(
@@ -90,6 +101,7 @@ final class GetDistrictByZipTest extends TestCase
             $httpClient,
             $requestFactory,
         );
+        $client->authenticate($apiKey);
 
         $this->expectException(ClientExceptionInterface::class);
         $this->expectExceptionMessage('');
@@ -103,12 +115,12 @@ final class GetDistrictByZipTest extends TestCase
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/districts/00000.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/districts/00000')->willReturn($request);
 
         $response = $this->createConfiguredMock(
             ResponseInterface::class,
             [
-                'getStatusCode' => 500,
+                'getStatusCode' => 401,
             ]
         );
 
@@ -121,7 +133,7 @@ final class GetDistrictByZipTest extends TestCase
         );
 
         $this->expectException(UnexpectedResponseException::class);
-        $this->expectExceptionMessage('Server replied with the status code 500, but 200 was expected.');
+        $this->expectExceptionMessage('Server replied with the status code 401, but 200 was expected.');
 
         $client->getDistrictByZip('00000');
     }
@@ -132,7 +144,7 @@ final class GetDistrictByZipTest extends TestCase
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/districts/12305.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/districts/12305')->willReturn($request);
 
         $response = $this->createConfiguredMock(
             ResponseInterface::class,
@@ -162,7 +174,7 @@ final class GetDistrictByZipTest extends TestCase
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/districts/12305.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/districts/12305')->willReturn($request);
 
         $stream = $this->createConfiguredMock(
             StreamInterface::class,
@@ -200,7 +212,7 @@ final class GetDistrictByZipTest extends TestCase
         $request->expects($this->exactly(1))->method('withHeader')->willReturn($request);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/districts/12305.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/districts/12305')->willReturn($request);
 
         $stream = $this->createConfiguredMock(
             StreamInterface::class,

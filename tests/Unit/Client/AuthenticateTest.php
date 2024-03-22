@@ -28,7 +28,7 @@ final class AuthenticateTest extends TestCase
         ]);
 
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
-        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/districts.json')->willReturn($request);
+        $requestFactory->expects($this->exactly(1))->method('createRequest')->with('GET', 'https://www.weg.li/api/districts')->willReturn($request);
 
         $stream = $this->createConfiguredMock(
             StreamInterface::class,
