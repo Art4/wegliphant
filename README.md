@@ -10,8 +10,8 @@
 
 - API Docs: https://www.weg.li/api
 - API Source: https://www.weg.li/apidocs.json
-- API Version: https://github.com/weg-li/weg-li/tree/c1b13d731cba72b18a221c9b6c71324d78614bd2
-- API Datetime: 2024-03-06T09:21:36Z
+- API Version: https://github.com/weg-li/weg-li/tree/9247d97012486a052e0a326bec83e754ace750a6
+- API Datetime: 2024-03-22T08:19:09Z
 
 Requires: PHP ^8.1
 

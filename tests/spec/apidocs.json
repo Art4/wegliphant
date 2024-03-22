@@ -13,7 +13,7 @@
         }
     ],
     "info": {
-        "version": "1.0.0+c1b13d731cba72b18a221c9b6c71324d78614bd2",
+        "version": "1.0.0+9247d97012486a052e0a326bec83e754ace750a6",
         "title": "weg.li API Docs",
         "description": "\n      The weg.li API allows an authorized user to manage notices, upload photos and notify the authorities.\n\n      The API-KEY can be obtained via the profile page https://www.weg.li/user\n\n      Creating a notice requires creating uploads for each photo previously and uploading the binary data through a presigned URL to the gcloud.\n\n      So in order to create a notice the client needs to follow those steps:\n      1. Create a new upload using the filename, the size in bytes of the file, the MD5 base64 Digest of the file and the content-type image/jpeg\n      2. Use the response fields 'url' and 'headers' in order to upload the binary data via PUT request\n      3. Repeat for every photo\n      4. Create notice using signed_id keys of the uploads created as the values to the photos array of the notice\n\n      An example Implementation can be found here https://github.com/weg-li/weg-li/blob/master/api_usage_example\n      ",
         "termsOfService": "https://www.weg.li/privacy/",
@@ -51,6 +51,122 @@
         "application/json"
     ],
     "paths": {
+        "/charges": {
+            "get": {
+                "summary": "Get all Charges",
+                "description": "Returns a list of all charges",
+                "tags": [
+                    "charge"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "charge response",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Charge"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/charges/{tbnr}": {
+            "get": {
+                "summary": "Get Chage",
+                "description": "Gets a charge for given tbnr/id",
+                "tags": [
+                    "charge"
+                ],
+                "parameters": [
+                    {
+                        "name": "tbnr",
+                        "in": "path",
+                        "description": "TBNR of notice",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "charge response",
+                        "schema": {
+                            "$ref": "#/definitions/Charge"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/districts": {
+            "get": {
+                "summary": "Get all Districts",
+                "description": "Returns a list of all districts",
+                "tags": [
+                    "district"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "district response",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/District"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/districts/{zip}": {
+            "get": {
+                "summary": "Get District",
+                "description": "Gets a district for given zip/id",
+                "tags": [
+                    "district"
+                ],
+                "parameters": [
+                    {
+                        "name": "zip",
+                        "in": "path",
+                        "description": "Zip of notice",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "district response",
+                        "schema": {
+                            "$ref": "#/definitions/District"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/notices": {
             "get": {
                 "summary": "Get all Notices",
@@ -279,6 +395,113 @@
         }
     },
     "definitions": {
+        "Charge": {
+            "properties": {
+                "tbnr": {
+                    "type": "string",
+                    "pattern": "^\\d{6}$"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fine": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "bkat": {
+                    "type": "string"
+                },
+                "penalty": {
+                    "type": "string"
+                },
+                "fap": {
+                    "type": "string"
+                },
+                "points": {
+                    "type": "string"
+                },
+                "valid_from": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "valid_to": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "implementation": {
+                    "type": "string"
+                },
+                "classification": {
+                    "type": "string"
+                },
+                "rule_id": {
+                    "type": "string"
+                },
+                "table_id": {
+                    "type": "string"
+                },
+                "required_refinements": {
+                    "type": "string"
+                },
+                "max_fine": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "District": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "zip": {
+                    "type": "string",
+                    "pattern": "^\\d{5}$"
+                },
+                "email": {
+                    "type": "string",
+                    "pattern": ".+@.+\\..+"
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "personal_email": {
+                    "type": "boolean"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "aliases": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "prefixes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "Notice": {
             "properties": {
                 "token": {
