@@ -8,7 +8,10 @@
 
 🐘 Wegliphant is a PHP client for the [weg.li](https://www.weg.li/) 🚲💨 API.
 
-API Docs: https://www.weg.li/api
+- API Docs: https://www.weg.li/api
+- API Source: https://www.weg.li/apidocs.json
+- API Version: https://github.com/weg-li/weg-li/tree/c1b13d731cba72b18a221c9b6c71324d78614bd2
+- API Datetime: 2024-03-06T09:21:36Z
 
 Requires: PHP ^8.1
 
