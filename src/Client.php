@@ -34,7 +34,7 @@ final class Client
     }
 
     /**
-     * List all districts using the endpoint `GET /districts.json`
+     * List all districts using the endpoint `GET /api/districts`
      *
      * @link https://www.weg.li/api
      *
@@ -45,13 +45,13 @@ final class Client
      */
     public function listDistricts(): array
     {
-        $response = $this->sendJsonRequest('GET', '/districts.json');
+        $response = $this->sendJsonRequest('GET', '/api/districts');
 
         return $this->parseJsonResponseToArray($response, 200);
     }
 
     /**
-     * Get one district by ZIP using the endpoint `GET /districts/<zip>.json`
+     * Get one district by ZIP using the endpoint `GET /api/districts/<zip>`
      *
      * @link https://www.weg.li/api
      *
@@ -68,7 +68,7 @@ final class Client
     }
 
     /**
-     * List all charges using the endpoint `GET /charges.json`
+     * List all charges using the endpoint `GET /api/charges`
      *
      * @link https://www.weg.li/api
      *
