@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- New method `Art4\Wegliphant\Client::getChargeByTbnr()` to get one charge by tbnr.
 - The supported weg.li-API spec as Swagger 2.0 json format was added.
 
 ### Changed
