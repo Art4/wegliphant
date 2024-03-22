@@ -62,7 +62,7 @@ final class Client
      */
     public function getDistrictByZip(string $zip): array
     {
-        $response = $this->sendJsonRequest('GET', '/districts/' . $zip . '.json');
+        $response = $this->sendJsonRequest('GET', '/api/districts/' . $zip);
 
         return $this->parseJsonResponseToArray($response, 200);
     }
